@@ -1,0 +1,147 @@
+---
+globs: **/*.py
+alwaysApply: false
+---
+# Backend Rules — Python / FastAPI
+
+## Eduardo Reviews Everything
+
+The developer is a senior Python engineer. Write clean, typed, idiomatic code. He WILL catch mistakes.
+
+## Stack (do not deviate)
+
+- Python 3.12+
+- FastAPI (async)
+- SQLAlchemy 2.x (async, mapped_column style)
+- Alembic (migrations)
+- Pydantic v2 (schemas)
+- pydantic-settings (config)
+- psycopg 3 (`postgresql+psycopg://`, NOT asyncpg, NOT psycopg2)
+- httpx (async HTTP client)
+- Prefect 3 (pipelines)
+- Logfire (observability)
+- Redis (caching)
+- uv (package manager)
+- Ruff (linter + formatter)
+- basedpyright (type checker, NOT mypy)
+
+## Code Style
+
+### Imports
+
+```python
+from __future__ import annotations
+
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+```
+
+### Endpoints
+
+```python
+router = APIRouter(prefix="/items", tags=["items"])
+
+@router.get("/", response_model=list[ItemRead])
+async def list_items(
+    db: Annotated[AsyncSession, Depends(get_db)],
+    skip: int = 0,
+    limit: int = 50,
+) -> list[ItemRead]:
+    result = await db.execute(select(Item).offset(skip).limit(limit))
+    return result.scalars().all()
+```
+
+### Models (SQLAlchemy 2.x)
+
+```python
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from src.libs.dal.base import Base
+
+class Item(Base):
+    __tablename__ = "items"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(200))
+```
+
+### Schemas (Pydantic v2)
+
+```python
+from pydantic import BaseModel, ConfigDict
+
+class ItemRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    name: str
+```
+
+## DAL — Database Access Layer
+The database layer lives in `src/libs/dal/` (NOT `db/`).
+- `base.py` — Engine, async session factory, Base class
+- `models/` — SQLAlchemy models (one file per entity)
+- `migrations/` — Alembic
+
+## Schema Organization
+Schemas live in `src/schemas/`. For complex entities with many schemas, use subdirectories:
+
+```
+schemas/
+├── auth.py                   # Simple: single file is fine
+└── entity/                   # Complex: subdirectory
+    ├── read.py               # API output
+    ├── write.py              # API input
+    ├── query.py              # Query params
+    └── dal.py                # DAL internal
+```
+
+Schema naming:
+- `read.py` — what the API returns to the client
+- `write.py` — what the client sends to the API
+- `query.py` — URL/query parameters (FastAPI Depends)
+- `dal.py` — internal schemas for DAL layer operations
+
+## Patterns to Follow
+
+- Use `Annotated[T, Depends(...)]` for all dependency injection.
+- Use `select()` not `query()` (SQLAlchemy 2.x style).
+- All endpoints are `async def`.
+- Raise `HTTPException` for errors — never return error dicts.
+- One router file per domain entity in `src/apps/api/routers/`.
+- Models go in `src/libs/dal/models/` — one file per entity.
+- Settings in `src/libs/settings.py` via `pydantic-settings`.
+- External API clients in `src/libs/clients/` using httpx.
+
+## Patterns to AVOID
+
+- `query()` — that's SQLAlchemy 1.x.
+- `psycopg2` or `asyncpg` — we use `psycopg` (v3).
+- `sync_session` — everything is async.
+- Returning dicts from endpoints — always use Pydantic response models.
+- `from_orm()` — that's Pydantic v1. Use `model_validate()`.
+- Global mutable state — use dependency injection.
+- `libs/db/` — it's `libs/dal/` (Database Access Layer).
+
+## Testing
+
+- pytest + pytest-asyncio
+- `asyncio_mode = "auto"` in pyproject.toml
+- Test files in `backend/tests/`
+- Use fixtures for db sessions
+
+## Commands
+
+```bash
+cd backend
+uv add <package>                        # add dependency
+uv sync                                 # install all
+uv run pytest                           # tests
+uv run ruff check .                     # lint
+uv run ruff format .                    # format
+uv run alembic revision --autogenerate -m "msg"  # new migration
+uv run alembic upgrade head             # apply migrations
+```

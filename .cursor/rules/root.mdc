@@ -1,0 +1,34 @@
+---
+description: Root-level rules for the monorepo
+globs: *, compose.yml, Makefile, .env*, infra/**
+---
+
+# {{PROJECT_NAME}} — Root Rules
+
+## Project Context
+This is a monorepo with a Python/FastAPI backend and Next.js/TypeScript frontend.
+
+The developer (Eduardo) is a senior Python engineer who knows nothing about frontend. AI is solely responsible for frontend quality.
+
+## Monorepo Conventions
+- Backend code lives in `backend/`. Frontend code lives in `frontend/`.
+- NEVER mix backend and frontend concerns in the same file or commit.
+- Root-level files: compose.yml, Makefile, .env.example, infra configs.
+- Environment variables: root `.env` for Docker Compose, `backend/.env` for local dev, `frontend/.env.local` for local dev.
+
+## Makefile
+All common operations go through the Makefile. Keep it updated when adding new workflows.
+
+## Docker Compose
+- Services: nginx, postgres, redis, prefect-server, prefect-worker, fastapi, nextjs.
+- `internal` network is isolated (no direct internet). Only nginx is on `public`.
+- Postgres uses healthcheck. Other services depend on it via `condition: service_healthy`.
+
+## Git
+- Commit messages: imperative mood, concise.
+- One logical change per commit.
+- Branch from `main`, PR back to `main`.
+
+## When modifying infrastructure
+- Always check that both `.env.example` files (root and backend) stay in sync.
+- Test with `docker compose up --build` before committing.
