@@ -21,13 +21,16 @@ Trivial edits do not need a plan: typos, lockfile-only dependency
 bumps, single-file non-behavioral refactors, and tests for existing
 behavior.
 
-When a plan completes, move it from `active/` to `completed/` unchanged,
+When a plan completes, write its close-out (resolve open questions, log
+decisions), flip `status:`, and move it from `active/` to `completed/`
 in the same PR as the change.
 
 ## Keep decisions and debt explicit
 
-- Decision records in `docs/design-docs/` are immutable. Supersede with
-  a new numbered record; do not rewrite history.
+- Decision records in `docs/design-docs/` freeze on merge: the
+  substance is immutable — supersede with a new numbered record; do not
+  rewrite history. Lifecycle frontmatter (`status:`, `date:`,
+  `superseded-by:`) stays editable (design-doc 0005).
 - Accepted compromises go in `docs/exec-plans/tech-debt-tracker.md`
   with what, where, why accepted, and the exit condition.
 - New project commands belong in the Makefile (or, in template state,

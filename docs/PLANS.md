@@ -6,19 +6,36 @@ Exec plans are the **unit of work** in this repo. Not issues, not tickets, not c
 
 An exec plan is **self-contained**: a beginner — human or agent, with no access to the conversation that produced it — could read it and implement the feature end to end. If executing the plan requires asking its author something, the plan is not done being written.
 
+## Frontmatter
+
+Every plan starts with a YAML block. `status:` is canonical; the directory mirrors it (the harness check enforces the sync).
+
+```md
+---
+status: draft
+created: 2026-06-07
+---
+```
+
+- `status:` — `draft`, `executing`, or `blocked` while in `active/`; `completed` or `superseded` once in `completed/`.
+- `created:` — `YYYY-MM-DD`, stamped when the plan is drafted.
+- `completed:` — `YYYY-MM-DD`, stamped at close; required when status is `completed`.
+- `superseded-by: NNNN` — required when status is `superseded`.
+
 ## Lifecycle
 
 ```
 docs/exec-plans/
-├── active/        ← being written or being executed
-├── completed/     ← done; moved here verbatim, never rewritten
+├── active/        ← status: draft | executing | blocked
+├── completed/     ← status: completed | superseded — substance frozen
 └── tech-debt-tracker.md
 ```
 
-1. **Draft** the plan in `active/` as `NNNN-slug.md` (scan for the highest existing number across both directories, increment).
-2. **Execute** against it. If reality contradicts the plan, update the plan first, then the code — the plan stays truthful throughout.
-3. **Complete**: when validation passes, move the file to `completed/` unchanged. It is now the historical record.
-4. Anything deliberately deferred during execution gets a row in `tech-debt-tracker.md` with an exit condition.
+1. **Draft** the plan in `active/` as `NNNN-slug.md` (scan for the highest existing number across both directories, increment); `status: draft`, `created:` today.
+2. **Execute** against it (`status: executing`). If reality contradicts the plan, update the plan first, then the code — the plan stays truthful throughout. Small decisions made along the way go in the `## Decision log`; real trade-offs graduate to `docs/design-docs/` and get cited by number.
+3. **Close**: when validation passes, write the close-out — resolve every open question (a completed plan carries no `## Open questions` section; fold the answers into the body or the decision log), stamp `status: completed` and `completed:` — then move the file to `completed/`.
+4. **After close, substance is frozen.** Goal, Context, Plan, and Validation are the historical record — never altered. To change course, write a new plan and flip the old one to `status: superseded` / `superseded-by: NNNN`. Lifecycle frontmatter and dated `## Decision log` entries stay writable (design-doc 0005).
+5. Anything deliberately deferred during execution gets a row in `tech-debt-tracker.md` with an exit condition.
 
 ## Required sections
 
@@ -44,7 +61,7 @@ How we know the whole thing works: the commands to run (`make check` at
 minimum) and the observable outcomes that define done.
 ```
 
-Optional sections when they earn their place: `## Out of scope`, `## Risks`.
+Optional sections when they earn their place: `## Out of scope`, `## Risks`, `## Decision log` (dated, append-only entries), `## Open questions` (active plans only — resolved and removed at close).
 
 ## Rules
 

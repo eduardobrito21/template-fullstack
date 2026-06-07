@@ -1,3 +1,8 @@
+---
+status: accepted
+date: 2026-06-07
+---
+
 # 0004 — A rules tier between the map and the docs
 
 ## Decision
