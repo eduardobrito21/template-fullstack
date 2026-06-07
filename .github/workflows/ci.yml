@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Template state: the harness verifies itself. When /init-project wires
+      # a stack, replace this step with `make check` (which includes this script).
+      - name: Harness check
+        run: bash scripts/check_harness.sh

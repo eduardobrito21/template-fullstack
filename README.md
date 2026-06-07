@@ -1,92 +1,38 @@
-# {{PROJECT_NAME}}
+# Harness Template
 
-Fullstack monorepo template: **FastAPI** (Python) + **Next.js** (TypeScript).
+A repo template whose value is the **harness** — the scaffolding that lets agents operate a repo end-to-end — not a stack. No application code ships here; the stack is chosen per-project at instantiation.
 
-## Stack
+Built on the harness-engineering principles ([OpenAI, 2026](https://openai.com/index/harness-engineering/)): everything in the repo as markdown, a map not a manual, mechanical enforcement over documentation, agents that can verify their own work.
 
-| Layer    | Tech                                                |
-| -------- | --------------------------------------------------- |
-| Backend  | Python 3.12, FastAPI, SQLAlchemy 2, Alembic, Pydantic v2 |
-| Frontend | Next.js 16 (App Router), TypeScript, Tailwind v4    |
-| Database | PostgreSQL 16                                       |
-| Cache    | Redis 7                                             |
-| Proxy    | Nginx                                               |
-| Tooling  | uv (Python), npm (Node), Docker Compose             |
-
-## Quick Start
-
-```bash
-# 1. Clone and enter
-git clone <repo-url> && cd <project>
-
-# 2. Copy env files
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-
-# 3. Start everything
-make dev
-
-# 4. Or run backend/frontend separately for local dev
-make dev-backend   # http://localhost:8000
-make dev-frontend  # http://localhost:3000
-```
-
-## Project Structure
+## What ships
 
 ```
-.
-├── backend/          # FastAPI + SQLAlchemy + Alembic
-│   ├── src/
-│   │   ├── apps/api/ # FastAPI app, routers
-│   │   ├── libs/     # DAL, settings, clients, utils
-│   │   ├── schemas/  # Pydantic schemas
-│   │   └── tasks/    # Background tasks
-│   ├── Dockerfile
-│   └── pyproject.toml
-├── frontend/         # Next.js + Tailwind
-│   ├── src/
-│   │   ├── app/      # App Router pages
-│   │   └── lib/      # API client, utils
-│   ├── Dockerfile
-│   └── package.json
-├── infra/            # nginx, postgres init scripts
-├── compose.yml       # Docker orchestration
-├── Makefile          # Dev commands
-└── AGENTS.md         # AI agent guidelines
+AGENTS.md                  # ~100-line map — the agent's entry point (line budget enforced)
+ARCHITECTURE.md            # code map skeleton: layers, invariants, entry points
+CONTEXT.md                 # domain glossary (template's own, reset at instantiation)
+docs/
+├── PLANS.md               # the ExecPlan standard — the unit of work
+├── design-docs/           # numbered decisions + index + core-beliefs.md
+├── exec-plans/            # active/ → completed/, tech-debt-tracker.md
+├── product-specs/         # PRDs, indexed
+├── references/            # vendored <tool>-llms.txt docs
+├── generated/             # machine-owned
+├── DESIGN.md              # UI principles skeleton
+└── SECURITY.md            # security skeleton
+scripts/check_harness.sh   # the harness verifies itself (POSIX shell, no runtime)
+.claude/skills/init-project/  # the instantiation procedure
+.github/workflows/ci.yml   # runs the harness check on every PR
 ```
 
-## Commands
+## Usage
 
-```bash
-make help          # Show all commands
-make dev           # Start all services (Docker Compose)
-make stop          # Stop all services
-make dev-backend   # Backend only (hot reload)
-make dev-frontend  # Frontend only (hot reload)
-make test          # Run all tests
-make lint          # Lint everything
-make format        # Format backend code
-make migrate       # Run DB migrations
-make migration     # Create new migration
-make codegen       # Generate TS types from OpenAPI
-```
+1. Create a repo from this template (`gh repo create my-project --template <this-repo>`).
+2. Open it with your agent and run the **init-project** skill: it interviews you for name/stack/surfaces, scaffolds the stack, wires the Makefile contract (`check` / `test` / `lint` / `typecheck` / `dev`), resets the template's meta-docs, and seeds the first exec plan.
+3. From then on: work arrives as exec plans, decisions land in design-docs, and `make check` is the only definition of done.
 
-## Setup for Local Dev (without Docker)
+## The contract
 
-**Backend:**
-```bash
-cd backend
-uv sync          # Install dependencies
-uv run uvicorn src.apps.api.main:app --reload --port 8000
-```
-
-**Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
+Every instance exposes the same five make targets — agents never need per-repo knowledge to verify their work. Until a stack is wired, the harness verifies itself: `scripts/check_harness.sh`.
 
 ## License
 
