@@ -84,7 +84,26 @@ for state in active completed; do
   done
 done
 
-# --- 6. Relative link integrity in all markdown --------------------------------
+# --- 6. Rules tier (design-doc 0004) ------------------------------------------
+if [ -d .claude/rules ]; then
+  found_rule=0
+  for f in .claude/rules/*.md; do
+    [ -e "$f" ] || continue
+    found_rule=1
+    name=$(basename "$f")
+    case "$name" in
+      [0-9][0-9]-*.md) : ;;
+      *) err "rule not named NN-slug.md: .claude/rules/$name" ;;
+    esac
+    grep -q '^## Do not' "$f" \
+      || err "rule missing '## Do not' section: .claude/rules/$name"
+  done
+  [ "$found_rule" -eq 1 ] || err ".claude/rules/ exists but contains no rules"
+else
+  err "missing required path: .claude/rules"
+fi
+
+# --- 7. Relative link integrity in all markdown --------------------------------
 for md in *.md $(find docs -name '*.md'); do
   [ -e "$md" ] || continue
   dir=$(dirname "$md")
