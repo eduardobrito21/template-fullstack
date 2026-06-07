@@ -8,7 +8,7 @@ This file is a **map, not a manual**. It tells you where things live and which r
 
 | Path | What it is |
 |---|---|
-| `CONTEXT.md` | Domain glossary — the canonical vocabulary. Use these terms; flag conflicts. |
+| `CONTEXT.md` | Domain glossary — the canonical vocabulary, organized by section (product, tech, infra, business logic, …). Use these terms; flag conflicts. |
 | `ARCHITECTURE.md` | Code map: layers, dependency directions, structural invariants. |
 | `docs/PLANS.md` | The ExecPlan standard — how work is specified. **Read before writing any plan.** |
 | `docs/exec-plans/` | Units of work: `active/`, `completed/`, `tech-debt-tracker.md`. |

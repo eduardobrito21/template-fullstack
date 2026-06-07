@@ -28,7 +28,7 @@ Ask, one at a time, with recommendations:
 **Clear (template-specific layer):**
 - `docs/design-docs/0*.md` — numbered decisions about the template itself
 - `docs/exec-plans/active/*`, `docs/exec-plans/completed/*` — template exec plans
-- `CONTEXT.md` — replace with an empty glossary (title + purpose sentence; terms accrete from real work)
+- `CONTEXT.md` — replace with an empty glossary (title + purpose sentence) seeded with section headings — Product, Tech, Infra, Business logic — add or drop sections as the domain demands; terms accrete from real work
 - The "Template state" callouts in `AGENTS.md` and `ARCHITECTURE.md`
 
 **Prune (if not applicable):**
