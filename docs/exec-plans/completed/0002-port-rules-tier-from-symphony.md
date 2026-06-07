@@ -1,3 +1,9 @@
+---
+status: completed
+created: 2026-06-07
+completed: 2026-06-07
+---
+
 # 0002 — Port the rules tier from the symphony instance
 
 ## Goal

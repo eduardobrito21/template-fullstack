@@ -1,3 +1,9 @@
+---
+status: completed
+created: 2026-06-07
+completed: 2026-06-07
+---
+
 # 0001 — Teardown to harness template
 
 ## Goal

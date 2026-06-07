@@ -17,7 +17,7 @@ The fixed set of make targets every stamped project must expose (`check`, `test`
 _Avoid_: build scripts, dev commands
 
 **Harness check**:
-The template's only mechanical verification: `scripts/check_harness.sh` (POSIX tools only — no language runtime), validating the harness's own invariants (index/file sync, exec-plan structure, AGENTS.md line budget, link integrity). Direct-invoked by CI until instantiation folds it under `make check`.
+The template's only mechanical verification: `scripts/check_harness.sh` (POSIX tools only — no language runtime), validating the harness's own invariants (index/file sync, exec-plan structure, lifecycle frontmatter, AGENTS.md line budget, link integrity). Direct-invoked by CI until instantiation folds it under `make check`.
 _Avoid_: docs lint, structure test
 
 **Instantiation**:

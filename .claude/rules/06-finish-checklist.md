@@ -12,7 +12,9 @@ Run this short pass before handing off non-trivial work.
 - New decisions, commands, and compromises are recorded in the right
   harness file (design-doc, plan, tech-debt-tracker, rule, or
   AGENTS.md).
-- No completed exec plan or design-doc was rewritten in place.
+- No completed exec plan or design-doc had its substance rewritten in
+  place — lifecycle frontmatter and decision-log entries are fine
+  (design-doc 0005).
 - The completed plan moved to `completed/` in this same PR.
 
 ## Boundaries and types
