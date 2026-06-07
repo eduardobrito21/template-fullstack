@@ -19,6 +19,7 @@ This file is a **map, not a manual**. It tells you where things live and which r
 | `docs/DESIGN.md` | Visual/UX principles (instances with a UI). |
 | `docs/SECURITY.md` | Secrets handling, authz model, threat notes. |
 | `scripts/check_harness.sh` | Mechanical validation of everything above (no runtime needed). |
+| `.claude/rules/` | Conduct rules — when to plan, boundaries, code shape, docstrings, finish checklist (design-doc 0004). |
 
 ## The Makefile contract
 
@@ -36,7 +37,7 @@ make dev         # run the app locally
 
 ## Working rules
 
-1. **The unit of work is an exec plan.** Non-trivial work starts as a plan in `docs/exec-plans/active/` per `docs/PLANS.md`; move it to `completed/` when validation passes.
+1. **The unit of work is an exec plan.** Non-trivial work (triggers: `.claude/rules/00-project-contract.md`) starts as a plan in `docs/exec-plans/active/` per `docs/PLANS.md`; move it to `completed/` when validation passes.
 2. **Decisions get recorded where they're made.** A real trade-off resolved → numbered file in `docs/design-docs/` + index entry, cited by number thereafter.
 3. **Glossary discipline.** `CONTEXT.md` terms are canonical. Encounter a conflict or a fuzzy term → sharpen the glossary, don't work around it.
 4. **Nothing is done unverified.** If you can't observe your change working (command, test, rendered page), build the capability to observe it first.

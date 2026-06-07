@@ -20,6 +20,7 @@ docs/
 ├── DESIGN.md              # UI principles skeleton
 └── SECURITY.md            # security skeleton
 scripts/check_harness.sh   # the harness verifies itself (POSIX shell, no runtime)
+.claude/rules/             # conduct rules — stack principles, concretized at instantiation
 .claude/skills/init-project/  # the instantiation procedure
 .github/workflows/ci.yml   # runs the harness check on every PR
 ```
