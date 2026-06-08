@@ -14,7 +14,7 @@ docs/
 ├── PLANS.md               # the ExecPlan standard — the unit of work
 ├── design-docs/           # numbered decisions + index + core-beliefs.md
 ├── exec-plans/            # active/ → completed/, tech-debt-tracker.md
-├── product-specs/         # PRDs, indexed
+├── product-specs/         # product KB — living view: area specs, knowledge, principles
 ├── references/            # vendored <tool>-llms.txt docs
 ├── generated/             # machine-owned
 ├── DESIGN.md              # UI principles skeleton

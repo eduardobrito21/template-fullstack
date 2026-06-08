@@ -33,7 +33,7 @@ docs/exec-plans/
 
 1. **Draft** the plan in `active/` as `NNNN-slug.md` (scan for the highest existing number across both directories, increment); `status: draft`, `created:` today.
 2. **Execute** against it (`status: executing`). If reality contradicts the plan, update the plan first, then the code — the plan stays truthful throughout. Small decisions made along the way go in the `## Decision log`; real trade-offs graduate to `docs/design-docs/` and get cited by number.
-3. **Close**: when validation passes, write the close-out — resolve every open question (a completed plan carries no `## Open questions` section; fold the answers into the body or the decision log), stamp `status: completed` and `completed:` — then move the file to `completed/`.
+3. **Close**: when validation passes, write the close-out — resolve every open question (a completed plan carries no `## Open questions` section; fold the answers into the body or the decision log), stamp `status: completed` and `completed:` — then move the file to `completed/`. If the work changed what the product *is*, update the owning note in the product KB (`docs/product-specs/`) in the same PR — the close is when behavior actually changed (design-doc 0006).
 4. **After close, substance is frozen.** Goal, Context, Plan, and Validation are the historical record — never altered. To change course, write a new plan and flip the old one to `status: superseded` / `superseded-by: NNNN`. Lifecycle frontmatter and dated `## Decision log` entries stay writable (design-doc 0005).
 5. Anything deliberately deferred during execution gets a row in `tech-debt-tracker.md` with an exit condition.
 

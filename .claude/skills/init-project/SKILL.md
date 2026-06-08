@@ -19,7 +19,8 @@ Ask, one at a time, with recommendations:
 
 **Keep (transferable layer):**
 - `docs/PLANS.md`, `docs/design-docs/core-beliefs.md` — unchanged
-- `docs/design-docs/index.md`, `docs/product-specs/index.md` — reset to empty index (keep header)
+- `docs/design-docs/index.md` — reset to empty index (keep header)
+- `docs/product-specs/index.md` — clear entries; keep the vault definition and the three type sections (design-doc 0006)
 - `docs/exec-plans/tech-debt-tracker.md` — keep header, clear rows
 - `ARCHITECTURE.md`, `docs/SECURITY.md`, `docs/DESIGN.md` — keep skeletons, fill during stage 3
 - `scripts/check_harness.sh`, `.github/workflows/ci.yml` — keep

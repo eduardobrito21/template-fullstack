@@ -4,7 +4,8 @@
 indexes); the trigger list itself is prose-only — enforced by review.
 
 This repo is harness-first. Before changing behavior, check `AGENTS.md`
-and `docs/product-specs/` — if the behavior is not specified there,
+and the product KB (`docs/product-specs/` — the living view of what the
+product *is*, design-doc 0006). If the behavior is not specified there,
 either stop or make the change deliberately through the exec-plan flow.
 
 ## Non-trivial work needs a plan
