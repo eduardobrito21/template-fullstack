@@ -13,7 +13,7 @@ This file is a **map, not a manual**. It tells you where things live and which r
 | `docs/PLANS.md` | The ExecPlan standard — how work is specified. **Read before writing any plan.** |
 | `docs/exec-plans/` | Units of work: `active/`, `completed/`, `tech-debt-tracker.md`. |
 | `docs/design-docs/` | Numbered decision records + `index.md` + `core-beliefs.md` (principles). |
-| `docs/product-specs/` | PRDs — the *what/why* of features, indexed in `index.md`. |
+| `docs/product-specs/` | Product KB — the living view of the product: area specs, knowledge, principles (design-doc 0006). |
 | `docs/references/` | Vendored `<tool>-llms.txt` docs — check here before relying on training data. |
 | `docs/generated/` | Machine-owned; never hand-edit. |
 | `docs/DESIGN.md` | Visual/UX principles (instances with a UI). |

@@ -80,6 +80,17 @@ if [ -f docs/product-specs/index.md ]; then
   done
 fi
 
+# --- 4b. product-specs: no wiki-links (design-doc 0006) ------------------------
+# Vault notes use standard relative links; Obsidian wiki-link syntax
+# silently escapes the link-integrity check (section 7) and breaks GitHub
+# rendering.
+for f in $(find docs/product-specs -name '*.md' 2>/dev/null); do
+  [ -e "$f" ] || continue
+  if grep -qF '[[' "$f"; then
+    err "wiki-link syntax ('[[') in product KB note: ${f#docs/product-specs/}"
+  fi
+done
+
 # --- 5. Exec plans: naming + required sections --------------------------------
 for state in active completed; do
   for f in docs/exec-plans/$state/*.md; do

@@ -27,3 +27,7 @@ _Avoid_: setup, bootstrap, init (as a noun)
 **Exec plan**:
 A self-contained design document in `docs/exec-plans/` written so a beginner could implement the feature end to end. The unit of work. Standard defined in `docs/PLANS.md`.
 _Avoid_: ticket, issue, task
+
+**Product KB**:
+The living view of what the product *is*: `docs/product-specs/` — area specs, knowledge notes, and principles, edited in place and indexed by a map of content. History is git; the *why* is design docs (0006).
+_Avoid_: PRD archive, specs folder, product docs

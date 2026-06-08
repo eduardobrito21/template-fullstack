@@ -7,3 +7,4 @@ One-line index of recorded decisions. Add an entry when adding a decision record
 - [0003 — No Makefile ships; the contract is prose, the harness check is a script](0003-no-makefile-until-instantiation.md)
 - [0004 — A rules tier between the map and the docs](0004-rules-tier.md)
 - [0005 — Substance freezes; lifecycle metadata lives](0005-substance-freezes-metadata-lives.md)
+- [0006 — product-specs is a knowledge base, not a PRD archive](0006-product-specs-is-a-knowledge-base.md)

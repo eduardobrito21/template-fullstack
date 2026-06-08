@@ -9,6 +9,9 @@ Run this short pass before handing off non-trivial work.
 ## Contract
 
 - Behavior traces to a product spec or the active exec plan (rule 00).
+- If the work changed what the product *is*, the owning note in the
+  product KB (`docs/product-specs/`) was updated in the same PR
+  (design-doc 0006).
 - New decisions, commands, and compromises are recorded in the right
   harness file (design-doc, plan, tech-debt-tracker, rule, or
   AGENTS.md).
